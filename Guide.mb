@@ -1,0 +1,125 @@
+# Technical Guide – AI Office Tutor
+
+This document explains the internal architecture of the AI Office Tutor project, intended for developers who want to understand, modify, or extend the system.
+
+---
+
+# 1. LLM Engine (SmartLLMEngine)
+
+The logic for interpreting user intent lives in `llm_engine.py`.
+
+### Responsibilities:
+- Match user text to Office UI labels (e.g., “bold”, “insert table”)
+- Query DeepSeek/Gemma locally through Ollama
+- Generate structured action steps
+- Produce a clean JSON response
+
+### Main Components:
+- **Label Matching**  
+  Uses semantic keyword hints + similarity scoring  
+- **LLM Prompting**  
+  System prompt forces JSON output  
+- **DeepSeek/Gemma Query**  
+  Uses `subprocess.run()` to call Ollama  
+- **Output Cleaning**  
+  Removes “thinking” traces and normalizes responses  
+
+---
+
+# 2. YOLO Detection
+
+The file `roboflow_detect.py` handles object detection.
+
+### Flow:
+1. Load the Roboflow-generated YOLO model  
+2. Run inference on the latest Word window screenshot  
+3. Filter detections by matched label  
+4. Return bounding boxes to the overlay system  
+
+You must use the same label names as found in `label_mapping.txt`.
+
+---
+
+# 3. Screen Capture System
+
+`screen_capture.py` is responsible for:
+
+- Capturing only the Word/Excel window  
+- Ensuring the chatbot window is excluded  
+- Saving a clean screenshot for YOLO  
+
+The tool uses Win32 API:
+- `GetWindowRect`
+- `PrintWindow`
+- Region masking for exclusion
+
+---
+
+# 4. Overlay Engine
+
+`overlay.py` creates a transparent, click-through window that overlays:
+- Detected boxes
+- Highlight rectangles
+- Smooth animations (if enabled)
+
+It uses:
+- PyQt5 frameless window  
+- Always-on-top flags  
+- Scaled coordinates using Word window size  
+
+---
+
+# 5. Chatbot UI (chatbot.py)
+
+### Features:
+- Frameless floating window  
+- Title bar with minimize/close  
+- Draggable system  
+- Message bubbles (user + assistant)  
+- Smooth scrolling animation  
+- Starts YOLO detection + overlay logic  
+- Hides itself before screenshot  
+- Re-shows after capturing  
+
+---
+
+# 6. Extending the System
+
+### Add new Office features:
+1. Add new labels to `label_mapping.txt`
+2. Add keyword hints in semantic_hints
+3. Train YOLO on the new UI element
+4. Re-export YOLO model
+5. Add image samples to your dataset
+
+### Change LLM:
+- Replace `"deepseek-r1:7b"` with any local model
+- Ensure the prompt still enforces JSON output  
+
+---
+
+# 7. Common Issues
+
+### ❌ Word window not detected
+- Ensure Word is open
+- Application title contains “Word”
+
+### ❌ Overlay not showing
+Cause: Word running as Administrator  
+Fix: Run chatbot as Administrator too
+
+### ❌ YOLO detects nothing
+- Wrong model file
+- Wrong label name
+- Incorrect screenshot region
+
+Detailed troubleshooting is in `TROUBLESHOOTING.md` (if created).
+
+---
+
+# 8. Future Improvements
+- GPT-Vision integration  
+- Auto-screenshot sequencing  
+- Multi-language support  
+- Browser extension version  
+- Excel mode auto-detection  
