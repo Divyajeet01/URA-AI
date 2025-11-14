@@ -3,7 +3,7 @@ import cv2
 import os
 
 # Initialize Roboflow model once
-api_key = os.environ.get("ROBOFLOW_API_KEY", "He6P4fZ5RBJLwsdCxa4N")
+api_key = os.environ.get("ROBOFLOW_API_KEY", "apikeyXXXX")
 try:
     rf = Roboflow(api_key=api_key)
     project = rf.workspace("ui-elements-t9wim").project("ui-elements-u0wsn")
@@ -54,3 +54,4 @@ def detect_objects(image_path, confidence=0.50, save_annotated_path=None, filter
         cv2.imwrite(save_annotated_path, img)
 
     return detections
+
