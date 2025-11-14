@@ -1,38 +1,52 @@
-📘 URA AI
-Your personal Microsoft Word & Excel assistant — powered by YOLO + Gemma.
-⭐ Overview
+# AI Office Tutor
 
-URA is an intelligent desktop assistant that helps you perform tasks in Microsoft Word and Excel instantly.
+AI Office Tutor is a desktop assistant designed to help users perform tasks in **Microsoft Word** using a combination of:
+- Real-time screen capture  
+- YOLO object detection  
+- A local LLM (DeepSeek or Gemma via Ollama)  
+- Overlay-based visual guidance  
 
-Just ask:
-“How do I bold text?”
-“Insert a table.”
-“Add a chart.”
+This tool identifies features inside Word, interprets user queries, and highlights the corresponding UI buttons directly on the screen — acting as an intelligent, interactive Office tutor.
 
-The AI detects toolbar buttons using YOLO, understands your query using LLMs ( Gemma ), and shows step-by-step instructions — along with an on-screen highlight pointing to the exact feature.
+---
 
-🚀 Features
+## ✨ Features
 
-🧠 Natural Language Understanding
-Uses Gemma:2b (via Ollama) to understand your request.
+- **Ask Anything**: “How to bold text?”, “Insert a chart”, “Check spelling”, etc.
+- **Local AI Reasoning** (DeepSeek R1 or Gemma via Ollama)
+- **Smart Label Matching** for Office features
+- **Real-Time YOLO Detection** of Word Ribbon UI
+- **Live Overlay Highlighting** on the real application window
+- **Smooth Chat UI** with animated scrolling
+- **Automatic Word Window Detection**
+- **Minimize/Close buttons fully functional**
+- **Chatbot auto-hides itself during screenshots**
 
-👁️ Real-time UI Detection
-YOLOv11 detects Word/Excel toolbar icons on your screen.
+---
 
-🖼️ Smart Screen Capture
-Automatically captures your screen without capturing the chatbot window.
+## 🧠 How It Works (Short Summary)
 
-🔍 Live Overlay Highlight
-Draws a bounding box over the exact button the user needs.
+1. You type a question into the chatbot  
+2. The system:
+   - Detects which Office feature you want  
+   - Determines the correct button label  
+   - Generates action steps using DeepSeek/Gemma  
+3. Word is brought to the front  
+4. The software screenshots the Word window  
+5. YOLO detects the UI buttons inside the screenshot  
+6. A transparent overlay highlights the detected feature  
+7. Chat shows the AI-generated steps
 
-✔️ Automatic Step Generation
-AI returns clean JSON steps like:
+Everything runs **locally** — no cloud processing.
 
-{ "intent": "bold", "label": "icon_bold", "steps": ["Home → Font → Bold"] }
+---
 
+## 📦 Installation
 
-📌 Works for Word and Excel
-Supports 140+ features (bold, italic, underline, tables, borders, charts, formulas, spelling, etc.)
+### **Prerequisites**
+- Windows 10/11  
+- Python 3.10+  
+- Microsoft Word installed  
+- Ollama installed → https://ollama.com/  
 
-🔌 Offline Support
-Works locally using Ollama models.
+    
