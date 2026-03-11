@@ -3,7 +3,7 @@
 URA is a desktop assistant designed to help users perform tasks in **Microsoft Word** using a combination of:
 - Real-time screen capture  
 - YOLO object detection  
-- A local LLM (DeepSeek or Gemma via Ollama)  
+- A local LLM (Gemma 4B)  
 - Overlay-based visual guidance  
 
 This tool identifies features inside Word, interprets user queries, and highlights the corresponding UI buttons directly on the screen — acting as an intelligent, interactive Office tutor.
