@@ -1,4 +1,4 @@
-# URA AI
+# URA AI  (https://ura-ai.vercel.app/)
 
 URA is a desktop assistant designed to help users perform tasks in **Microsoft Word** using a combination of:
 - Real-time screen capture  
